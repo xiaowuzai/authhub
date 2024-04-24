@@ -1,0 +1,165 @@
+definitions:
+  service.GenerateImgRequest:
+    properties:
+      boxes:
+        items:
+          $ref: '#/definitions/service.TextBox'
+        type: array
+      font_file_name:
+        type: string
+      id:
+        type: string
+    required:
+    - boxes
+    - font_file_name
+    - id
+    type: object
+  service.GenerateImgResponse:
+    properties:
+      id:
+        type: string
+    type: object
+  service.LineInfo:
+    properties:
+      text:
+        type: string
+      text_boxs:
+        items:
+          $ref: '#/definitions/service.TextBox'
+        type: array
+    type: object
+  service.OpenOcrRequest:
+    properties:
+      id:
+        type: string
+      lang:
+        type: string
+    required:
+    - id
+    - lang
+    type: object
+  service.OpenOcrResponse:
+    properties:
+      boxes:
+        items:
+          $ref: '#/definitions/service.TextBox'
+        type: array
+      id:
+        type: string
+    type: object
+  service.RecognizeTextAutoRequest:
+    properties:
+      id:
+        type: string
+    required:
+    - id
+    type: object
+  service.RecognizeTextAutoResponse:
+    properties:
+      angle:
+        type: number
+      excel_file_id:
+        type: string
+      json_text:
+        $ref: '#/definitions/service.Text'
+      line_infos:
+        items:
+          $ref: '#/definitions/service.LineInfo'
+        type: array
+      scale:
+        type: number
+    type: object
+  service.Text:
+    properties:
+      content:
+        type: string
+    type: object
+  service.TextBox:
+    properties:
+      text:
+        type: string
+      x_max:
+        type: integer
+      x_min:
+        type: integer
+      y_max:
+        type: integer
+      y_min:
+        type: integer
+    required:
+    - text
+    - x_max
+    - x_min
+    - y_max
+    - y_min
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/generate_img:
+    post:
+      consumes:
+      - application/json
+      description: 生成图片
+      parameters:
+      - description: 请求参数
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/service.GenerateImgRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.GenerateImgResponse'
+      summary: 生成图片
+      tags:
+      - openocr
+  /v1/open_ocr:
+    post:
+      consumes:
+      - application/json
+      description: 外语检测识别
+      parameters:
+      - description: 请求参数
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/service.OpenOcrRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.OpenOcrResponse'
+      summary: 外语检测识别
+      tags:
+      - openocr
+  /v1/recognize_text:
+    post:
+      consumes:
+      - application/json
+      description: 识别文件
+      parameters:
+      - description: 请求参数
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/service.RecognizeTextAutoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.RecognizeTextAutoResponse'
+      summary: 识别文件
+      tags:
+      - openocr
+swagger: "2.0"

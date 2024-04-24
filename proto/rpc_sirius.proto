@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package="git.corp.zgcszkw.com/authhub/pb";
+
+message TextBox {
+    string text = 1;
+    int32 x_min = 2;
+    int32 y_min = 3;
+    int32 x_max = 4;
+    int32 y_max = 5;
+}
+
+message LineInfo {
+    string text = 1;
+    repeated TextBox text_boxs = 6;
+}
+
+message RecognizeTextAutoRequest{
+    string id = 1;
+}
+
+message RecognizeTextAutoResponse{
+    Text json_text = 1;
+    string excel_file_id = 2;
+    repeated LineInfo line_infos = 3;
+    float angle = 4;
+    float scale = 5;
+}
+
+message Text{
+    string content = 1;
+}
+
+message OpenOcrRequest{
+    string id = 1;
+    string lang = 2;
+}
+
+message OpenOcrResponse{
+    repeated TextBox boxes = 1;
+}
+
+message GenerateImgRequest{
+    string id = 1;
+    repeated TextBox boxes = 2;
+}
+
+
+message GenerateImgResponse{
+    string id = 1;
+}

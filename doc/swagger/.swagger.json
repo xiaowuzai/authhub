@@ -1,0 +1,280 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "AuthHub API",
+    "version": "0.0.1",
+    "contact": {
+      "name": "gRPC-Gateway project",
+      "url": "https://github.com/grpc-ecosystem/grpc-gateway",
+      "email": "none@example.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "AuthHub"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/generate_img": {
+      "post": {
+        "operationId": "AuthHub_GenerateImg",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGenerateImgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbGenerateImgRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthHub"
+        ]
+      }
+    },
+    "/v1/open_ocr": {
+      "post": {
+        "summary": "Open ocr",
+        "description": "This API is used to open ocr",
+        "operationId": "AuthHub_OpenOcr",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbOpenOcrResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbOpenOcrRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthHub"
+        ]
+      }
+    },
+    "/v1/recognize_text_auto": {
+      "post": {
+        "operationId": "AuthHub_RecognizeTextAuto",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbRecognizeTextAutoResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbRecognizeTextAutoRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthHub"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "pbGenerateImgRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "boxes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbTextBox"
+          }
+        }
+      }
+    },
+    "pbGenerateImgResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "pbLineInfo": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "text_boxs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbTextBox"
+          }
+        }
+      }
+    },
+    "pbOpenOcrRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string"
+        }
+      }
+    },
+    "pbOpenOcrResponse": {
+      "type": "object",
+      "properties": {
+        "boxes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbTextBox"
+          }
+        }
+      }
+    },
+    "pbRecognizeTextAutoRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "pbRecognizeTextAutoResponse": {
+      "type": "object",
+      "properties": {
+        "json_text": {
+          "$ref": "#/definitions/pbText"
+        },
+        "excel_file_id": {
+          "type": "string"
+        },
+        "line_infos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbLineInfo"
+          }
+        },
+        "angle": {
+          "type": "number",
+          "format": "float"
+        },
+        "scale": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "pbText": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "pbTextBox": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "x_min": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "y_min": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "x_max": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "y_max": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

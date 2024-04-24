@@ -1,0 +1,52 @@
+
+syntax = "proto3";
+
+package pb;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+import "rpc_sirius.proto";
+
+option go_package="git.corp.zgcszkw.com/authhub/pb";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "AuthHub API";
+    version: "0.0.1";
+    contact: {
+      name: "gRPC-Gateway project";
+      url: "https://github.com/grpc-ecosystem/grpc-gateway";
+      email: "none@example.com";
+    };
+  };
+};
+
+
+service AuthHub {
+    rpc RecognizeTextAuto(RecognizeTextAutoRequest) returns (RecognizeTextAutoResponse){
+		option (google.api.http) = {
+			post: "/v1/recognize_text_auto"
+			body: "*"
+		};
+	}
+
+    rpc OpenOcr(OpenOcrRequest)returns (OpenOcrResponse){
+		option (google.api.http) = {
+			post: "/v1/open_ocr"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			description : 
+				"This API is used to open ocr",	
+			summary : "Open ocr";
+		};
+	}
+
+    rpc GenerateImg(GenerateImgRequest)returns (GenerateImgResponse){
+		option (google.api.http) = {
+			post: "/v1/generate_img"
+			body: "*"
+		};
+	}
+}

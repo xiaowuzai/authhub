@@ -1,0 +1,81 @@
+syntax = "proto3";
+package openocr;
+option go_package = "git.corp.zgcszkw.com/authhub/outerpb/openocr";
+
+message TextBox {
+    string text = 1;
+    int32 x_min = 2;
+    int32 y_min = 3;
+    int32 x_max = 4;
+    int32 y_max = 5;
+}
+
+message LineInfo {
+    string text = 1;
+    repeated TextBox text_boxs = 6;
+}
+
+message RecognizeTextAutoRequest{
+    string id = 1;
+}
+
+enum OcrInvoiceType{
+    INVOICE_TYPE_UNKNOWN = 0;
+    INVOICE_TYPE_VAT = 1; //增值税发票
+    INVOICE_TYPE_TRAIN = 2; //火车票
+    INVOICE_TYPE_TAXI = 3; //出租车票
+    INVOICE_TYPE_HIGHWAYTOLL = 4; //高速过路费发票
+    INVOICE_TYPE_QUOTA = 5; //定额发票
+    INVOICE_TYPE_FLIGHT = 6; //飞机票
+    INVOICE_TYPE_COACH = 7; //汽车客运发票
+    INVOICE_TYPE_BUS = 8; //公交车票
+    INVOICE_TYPE_ELE_VAT = 9;//电子发票
+}
+
+enum OcrLang{
+    OcrLang_INVALID = 0;
+    OcrLang_LAT = 1;
+    OcrLang_JAP = 2;
+    OcrLang_KR = 3;
+    OcrLang_RU = 4;
+    OcrLang_ARA = 5;
+}
+
+message Text{
+    string content = 1;
+}
+
+message RecognizeTextResponse{
+    Text json_text = 1;
+    string excel_file_id = 2;
+    repeated LineInfo line_infos = 3;
+    float angle = 4;
+    float scale = 5;
+}
+
+message OpenocrRequest{
+    string id = 1;
+    string lang = 2;
+}
+
+message OpenocrResponse{
+    repeated TextBox boxes = 1;
+    string id = 2;
+}
+
+message GenerateImgRequest{
+    string id = 1;
+    repeated TextBox boxes = 2;
+    string font_file_name = 3;
+}
+
+
+message GenerateImgResponse{
+    string id = 1;
+}
+
+service Openocr {
+    rpc RecognizeTextAuto(RecognizeTextAutoRequest) returns (RecognizeTextResponse){}
+    rpc Openocr(OpenocrRequest)returns (OpenocrResponse){}
+    rpc GenerateImg(GenerateImgRequest)returns (GenerateImgResponse){}
+}
