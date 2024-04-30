@@ -36,11 +36,14 @@ type GenerateImgRequest struct {
 	FontFileName string     `json:"font_file_name,omitempty" binding:"required"`
 }
 type GenerateImgResponse struct {
-	Id string `json:"id,omitempty"`
+	Id     string `json:"id,omitempty"`
+	Image  []byte `json:"image,omitempty"`
+	Height int32  `json:"height,omitempty"`
+	Width  int32  `json:"width,omitempty"`
 }
 
 type TextBox struct {
-	Text string `json:"text,omitempty" binding:"required"`
+	Text string `json:"text,omitempty" binding:"required"` // 需要 base64
 	XMin int32  `json:"x_min,omitempty" binding:"required"`
 	YMin int32  `json:"y_min,omitempty" binding:"required"`
 	XMax int32  `json:"x_max,omitempty" binding:"required"`

@@ -5,7 +5,7 @@ server:
 	go run main.go	
 
 local:
-	ENVIRONMENT=local go run main.go	
+	ENVIRONMENT=local go run .	
 
 docker-run:
 	docker run -p 8080:8080 -e ENVIRONMENT=local -e SIRIUS_HOST=192.168.143.202 -e SIRIUS_PORT=12580 \

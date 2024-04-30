@@ -50,7 +50,6 @@ func (akm *AppKeyValidator) CreateToken(appKey *AppKey) (string, error) {
 
 func (akm *AppKeyValidator) createToken(appKey *AppKey, secret string) (string, error) {
 	str := appKey.formatString(secret)
-	log.Println("GenSignature str: ", str)
 	token := genSignature(str)
 	return token, nil
 }

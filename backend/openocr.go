@@ -44,7 +44,7 @@ func NewOpenocrClient(conf *config.Config) (service.RecognizeRepo, error) {
 			MinConnectTimeout: 2 * time.Second,
 		}),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(10000000)),
+		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(20000000)),
 		grpc.WithKeepaliveParams(keepalive.ClientParameters{
 			Time:                time.Second * 20,
 			Timeout:             time.Second * 1,

@@ -33,6 +33,7 @@ func main() {
 	}
 
 	gin.SetMode(gin.ReleaseMode)
+
 	// 开发环境日志输出
 	if config.Environment == "local" || config.Environment == "development" {
 		gin.SetMode(gin.DebugMode)
@@ -78,9 +79,9 @@ func runGinServer(
 	waitGroup.Go(func() error {
 		<-ctx.Done() // 从通道中读出信号，表示已经关闭
 
-		log.Info().Msg("graceful shutdown gRPC server")
+		log.Info().Msg("graceful shutdown http server")
 		_ = server.GracefulShutdown(ctx)
-		log.Info().Msg("gRPC server is stopped")
+		log.Info().Msg("http server is stopped")
 
 		return nil
 	})
