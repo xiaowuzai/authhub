@@ -112,9 +112,11 @@ func (sc *OpenocrClient) GenerateImg(ctx context.Context, in *service.GenerateIm
 		return nil, err
 	}
 
-	result := &service.GenerateImgResponse{}
-	if err := copier.Copy(result, res); err != nil {
-		return nil, err
+	result := &service.GenerateImgResponse{
+		Id:     res.Id,
+		Image:  service.BytesToBase64String(res.Image),
+		Height: res.Height,
+		Width:  res.Width,
 	}
 	return result, nil
 }

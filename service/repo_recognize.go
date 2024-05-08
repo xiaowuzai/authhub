@@ -37,7 +37,7 @@ type GenerateImgRequest struct {
 }
 type GenerateImgResponse struct {
 	Id     string `json:"id,omitempty"`
-	Image  []byte `json:"image,omitempty"`
+	Image  string `json:"image,omitempty"` // base64
 	Height int32  `json:"height,omitempty"`
 	Width  int32  `json:"width,omitempty"`
 }
